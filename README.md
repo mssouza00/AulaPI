@@ -1,0 +1,2 @@
+# AulaPI
+Exercicio PI3
