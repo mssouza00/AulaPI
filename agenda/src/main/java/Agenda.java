@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.senac.tads.pi3.mssouza00.agenda;
 
 /**
  *
  * @author matheus.ssouza1
  */
 public class Agenda {
-    int var;
+    
 }
