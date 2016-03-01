@@ -76,6 +76,48 @@ public class Agenda {
             }
         }
     }
+    public void AddPessoa() {
+        Statement stmt = null;
+        Connection conn = null;
+
+        String sql = "insert into ";
+        try {
+            conn = obterConexao();
+            stmt = conn.createStatement();
+            ResultSet resultados = stmt.executeQuery(sql);
+
+            DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+
+            while (resultados.next()) {
+                Long id = resultados.getLong("ID_PESSOA");
+                String nome = resultados.getString("NM_PESSOA");
+                Date dataNasc = resultados.getDate("DT_NASCIMENTO");
+                String email = resultados.getString("VL_EMAIL");
+                String telefone = resultados.getString("VL_TELEFONE");
+                System.out.println(String.valueOf(id) + ", " + nome + ", " + formatadorData.format(dataNasc) + ", " + email + ", " + telefone);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 
 }
 
