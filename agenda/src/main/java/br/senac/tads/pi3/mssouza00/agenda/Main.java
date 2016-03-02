@@ -34,7 +34,7 @@ public class Main {
                  System.out.println("E-mail:");
                 contato[5] = input.nextLine();
                 contato[6] = "02-03-2016";
-                agenda.AddPessoa();
+                agenda.AddPessoa(contato);
                 break;
             case 2:
                 break;

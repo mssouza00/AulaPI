@@ -75,18 +75,18 @@ public class Agenda {
             }
         }
     }
-    public void AddPessoa(String nome, String dataNasc,String telefone,String email,String dtCadastro) {
+    public void AddPessoa(Object contato[]) {
         Statement stmt = null;
         Connection conn = null;
 
         
          
-//         String nome =null;
-//         String dataNasc=null;
-//         String telefone=null;
-//         String email =null;
-//         String dtCadastro=null;
-//         
+         String nome =null;
+         String dataNasc=null;
+         String telefone=null;
+         String email =null;
+         String dtCadastro=null;
+         
       
         
             String sql = "INSERT INTO TB_CONTATO (NM_CONTATO, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL, DT_CADASTRO)" +
