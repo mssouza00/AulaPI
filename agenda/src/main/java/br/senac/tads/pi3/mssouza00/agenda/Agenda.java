@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package br.senac.tads.pi3.mssouza00.agenda;
 /**
  *
  * @author matheus.ssouza1
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 public class Agenda {
     private Connection obterConexao() throws SQLException, ClassNotFoundException {
-        Connection conn = null;
+        Connection conn;
         // Passo 1: Registrar driver JDBC.
         Class.forName("org.apache.derby.jdbc.ClientDataSource");
 
@@ -55,9 +55,7 @@ public class Agenda {
                 System.out.println(String.valueOf(id) + ", " + nome + ", " + formatadorData.format(dataNasc) + ", " + email + ", " + telefone);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (stmt != null) {
@@ -97,9 +95,7 @@ public class Agenda {
                 System.out.println(String.valueOf(id) + ", " + nome + ", " + formatadorData.format(dataNasc) + ", " + email + ", " + telefone);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (stmt != null) {
