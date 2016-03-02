@@ -11,6 +11,7 @@ package br.senac.tads.pi3.mssouza00.agenda;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -74,37 +75,36 @@ public class Agenda {
             }
         }
     }
-    public void AddPessoa() {
+    public void AddPessoa(String nome, String dataNasc,String telefone,String email,String dtCadastro) {
         Statement stmt = null;
         Connection conn = null;
 
-        String sql = "insert into ";
-        try {
-            conn = obterConexao();
-            stmt = conn.createStatement();
-            ResultSet resultados = stmt.executeQuery(sql);
-
-            DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
-
-            while (resultados.next()) {
-                Long id = resultados.getLong("ID_PESSOA");
-                String nome = resultados.getString("NM_PESSOA");
-                Date dataNasc = resultados.getDate("DT_NASCIMENTO");
-                String email = resultados.getString("VL_EMAIL");
-                String telefone = resultados.getString("VL_TELEFONE");
-                System.out.println(String.valueOf(id) + ", " + nome + ", " + formatadorData.format(dataNasc) + ", " + email + ", " + telefone);
+        
+         
+//         String nome =null;
+//         String dataNasc=null;
+//         String telefone=null;
+//         String email =null;
+//         String dtCadastro=null;
+//         
+      
+        
+            String sql = "INSERT INTO TB_CONTATO (NM_CONTATO, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL, DT_CADASTRO)" +
+        "VALUES (?,?,?,?,?);";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, nome);
+                ps.setString(2, dataNasc);
+                ps.setString(3, telefone);
+                ps.setString(4, email);
+                ps.setString(5, "CURRENT_TIMESTAMP");
+                ps.execute();
+                ps.close();
+                
             }
-
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException ex) {
+         catch (SQLException ex) {
                     Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+            
             if (conn != null) {
                 try {
                     conn.close();
@@ -112,7 +112,7 @@ public class Agenda {
                     Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }
+        
     }
 
 }
