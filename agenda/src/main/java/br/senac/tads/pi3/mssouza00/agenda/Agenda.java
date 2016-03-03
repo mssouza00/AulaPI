@@ -27,7 +27,7 @@ public class Agenda {
         // Passo 1: Registrar driver JDBC.
         Class.forName("org.apache.derby.jdbc.ClientDataSource");
 
-        // Passo 2: Abrir a conexÃ£o
+        // Passo 2: Abrir a conexÃƒÂ£o
         conn = DriverManager.getConnection(
                 "jdbc:derby://localhost:1527/agendabd;SecurityMechanism=3",
                 "app", // usuario
@@ -85,12 +85,11 @@ public class Agenda {
          String dataNasc=null;
          String telefone=null;
          String email =null;
-         String dtCadastro=null;
+        
          
       
         
-            String sql = "INSERT INTO TB_CONTATO (NM_CONTATO, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL, DT_CADASTRO)" +
-        "VALUES (?,?,?,?,?);";
+            String sql = "INSERT INTO TB_CONTATO (NM_CONTATO, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL, DT_CADASTRO) VALUES (?,?,?,?,?);";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, nome);
                 ps.setString(2, dataNasc);
@@ -113,6 +112,82 @@ public class Agenda {
                 }
             }
         
+    }
+    public int alterarContato(int codigo, Object contato) {
+       Statement stmt = null;
+        Connection conn = null;
+         String nome =null;
+         String dataNasc=null;
+         String telefone=null;
+         String email =null;
+        try {
+            conn.setAutoCommit(false);
+            String sql = "UPDATE tb_contato SET nm_contato=?,dt_nascimento=?,vl_telefone=?,vl_email=? WHERE id_contato = ?";
+            
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, nome);
+                ps.setString(2, dataNasc);
+                ps.setString(3, telefone);
+                ps.setString(4, email);
+                ps.execute();
+                conn.commit();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 1;
+    }
+    public int deletaContato(String nome) {
+       Statement stmt = null;
+        Connection conn = null;
+         
+       
+        try {
+            conn.setAutoCommit(false);
+            String sql = "delete from tb_contato where nm_contato =?";
+                   
+            
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, nome);
+                ps.execute();
+                conn.commit();
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return 1;
     }
 
 }
