@@ -13,6 +13,7 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
+        Contato contato= new Contato();
         Agenda agenda = new Agenda();
         Scanner input = new Scanner(System.in);
         System.out.printf("1 - Cadastrar contato"
@@ -21,22 +22,25 @@ public class Main {
                 + "\n4 - Excluir Contato\n");
         
         short itemMenu = input.nextShort();
-        Object contato[] = new Object[6];
+        
         switch(itemMenu) {
             case 1:
                 System.out.println("Informações de cadastro:");
                 System.out.println("Nome:");
-                contato[2] = input.next();
+                contato.setNM_CONTATO(input.next());
                 System.out.println("Data de Nascimento:");
-                contato[3] = input.nextLine();
+                contato.setDT_NASCIMENTO(input.next());
                 System.out.println("Telefone:");
-                contato[4] = input.nextLine();
-                 System.out.println("E-mail:");
-                contato[5] = input.nextLine();
-                contato[6] = "02-03-2016";
+                contato.setVL_TELEFONE(input.next());
+                System.out.println("E-mail:");
+                contato.setVL_EMAIL(input.nextLine());
                 agenda.AddPessoa(contato);
                 break;
             case 2:
+                System.out.println("Consultar contato:");
+                System.out.println("Nome:");
+                contato.setNM_CONTATO(input.next());
+                agenda.consultarContato(contato.getNM_CONTATO());
                 break;
             case 3:
                 break;

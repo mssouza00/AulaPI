@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package br.senac.tads.pi3.mssouza00.agenda;
+
 /**
  *
  * @author matheus.ssouza1
@@ -20,8 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class Agenda {
+
     private Connection obterConexao() throws SQLException, ClassNotFoundException {
         Connection conn;
         // Passo 1: Registrar driver JDBC.
@@ -29,7 +30,7 @@ public class Agenda {
 
         // Passo 2: Abrir a conexÃƒÂ£o
         conn = DriverManager.getConnection(
-                "jdbc:derby://localhost:1527/agendabd;SecurityMechanism=3",
+                "jdbc:derby://localhost:1527/sample;SecurityMechanism=3",
                 "app", // usuario
                 "app"); // senha
         return conn;
@@ -75,55 +76,54 @@ public class Agenda {
             }
         }
     }
-    public void AddPessoa(Object contato[]) {
+
+    public void AddPessoa(Contato contato) {
+        Connection conn = null;
+        try {
+            conn = obterConexao();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String nome = contato.getNM_CONTATO();
+        String dataNasc = contato.getDT_NASCIMENTO();
+        String telefone = contato.getVL_TELEFONE();
+        String email = contato.getVL_EMAIL();
+
+        String sql = "INSERT INTO TB_CONTATO (NM_CONTATO, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL, DT_CADASTRO) VALUES (?,?,?,?,?);";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nome);
+            ps.setString(2, dataNasc);
+            ps.setString(3, telefone);
+            ps.setString(4, email);
+            ps.setString(5, "CURRENT_TIMESTAMP");
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public int alterarContato(int codigo, Object contato) {
         Statement stmt = null;
         Connection conn = null;
-
-        
-         
-         String nome =null;
-         String dataNasc=null;
-         String telefone=null;
-         String email =null;
-        
-         
-      
-        
-            String sql = "INSERT INTO TB_CONTATO (NM_CONTATO, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL, DT_CADASTRO) VALUES (?,?,?,?,?);";
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, nome);
-                ps.setString(2, dataNasc);
-                ps.setString(3, telefone);
-                ps.setString(4, email);
-                ps.setString(5, "CURRENT_TIMESTAMP");
-                ps.execute();
-                ps.close();
-                
-            }
-         catch (SQLException ex) {
-                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        
-    }
-    public int alterarContato(int codigo, Object contato) {
-       Statement stmt = null;
-        Connection conn = null;
-         String nome =null;
-         String dataNasc=null;
-         String telefone=null;
-         String email =null;
+        String nome = null;
+        String dataNasc = null;
+        String telefone = null;
+        String email = null;
         try {
             conn.setAutoCommit(false);
             String sql = "UPDATE tb_contato SET nm_contato=?,dt_nascimento=?,vl_telefone=?,vl_email=? WHERE id_contato = ?";
-            
+
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, nome);
                 ps.setString(2, dataNasc);
@@ -153,16 +153,15 @@ public class Agenda {
         }
         return 1;
     }
+
     public int deletaContato(String nome) {
-       Statement stmt = null;
+        Statement stmt = null;
         Connection conn = null;
-         
-       
+
         try {
             conn.setAutoCommit(false);
             String sql = "delete from tb_contato where nm_contato =?";
-                   
-            
+
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, nome);
                 ps.execute();
@@ -190,5 +189,8 @@ public class Agenda {
         return 1;
     }
 
-}
+    private String toString(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+}
