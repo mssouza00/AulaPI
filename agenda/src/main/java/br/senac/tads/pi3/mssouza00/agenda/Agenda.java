@@ -30,7 +30,7 @@ public class Agenda {
 
         // Passo 2: Abrir a conexÃƒÂ£o
         conn = DriverManager.getConnection(
-                "jdbc:derby://localhost:1527/sample;SecurityMechanism=3",
+                "jdbc:derby://localhost:1527/agendadb;SecurityMechanism=3",
                 "app", // usuario
                 "app"); // senha
         return conn;
@@ -40,7 +40,7 @@ public class Agenda {
         Statement stmt = null;
         Connection conn = null;
 
-        String sql = "SELECT ID_PESSOA, NM_PESSOA, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL FROM TB_PESSOA";
+        String sql = "SELECT NM_contato, DT_NASCIMENTO, VL_TELEFONE, VL_EMAIL FROM TB_contato";
         try {
             conn = obterConexao();
             stmt = conn.createStatement();
@@ -49,12 +49,11 @@ public class Agenda {
             DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
 
             while (resultados.next()) {
-                Long id = resultados.getLong("ID_PESSOA");
-                String nome = resultados.getString("NM_PESSOA");
+                String nome = resultados.getString("NM_contato");
                 Date dataNasc = resultados.getDate("DT_NASCIMENTO");
                 String email = resultados.getString("VL_EMAIL");
                 String telefone = resultados.getString("VL_TELEFONE");
-                System.out.println(String.valueOf(id) + ", " + nome + ", " + formatadorData.format(dataNasc) + ", " + email + ", " + telefone);
+                System.out.println( nome + ", " + formatadorData.format(dataNasc) + ", " + email + ", " + telefone);
             }
 
         } catch (SQLException | ClassNotFoundException ex) {
