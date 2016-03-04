@@ -26,14 +26,15 @@ public class Main {
             case 1:
                 System.out.println("Informações de cadastro:");
                 System.out.println("Nome:");
-                contato[2] = input.next();
+                contato[1] = input.next();
                 System.out.println("Data de Nascimento:");
-                contato[3] = input.nextLine();
+                contato[2] = input.next();
                 System.out.println("Telefone:");
-                contato[4] = input.nextLine();
+                contato[3] = input.next();
                  System.out.println("E-mail:");
-                contato[5] = input.nextLine();
-                contato[6] = "02-03-2016";
+                contato[4] = input.next();
+                contato[5] = "02-03-2016";
+                System.out.println("");
                 agenda.AddPessoa(contato);
                 break;
             case 2:
