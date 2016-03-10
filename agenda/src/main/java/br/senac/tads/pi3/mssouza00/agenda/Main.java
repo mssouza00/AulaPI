@@ -5,6 +5,7 @@
  */
 package br.senac.tads.pi3.mssouza00.agenda;
 
+import br.senac.tads.pi3.mssouza00.agenda.dao.ContatoDAO;
 import java.util.Scanner;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
-        Contato contato= new Contato();
+        Contato contato = new Contato();
         Agenda agenda = new Agenda();
         Scanner input = new Scanner(System.in);
         System.out.printf("1 - Cadastrar contato"
@@ -34,6 +35,9 @@ public class Main {
                 contato.setVL_TELEFONE(input.next());
                 System.out.println("E-mail:");
                 contato.setVL_EMAIL(input.nextLine());
+                contato.setVL_EMAIL(input.nextLine());
+                input.next();
+                ContatoDAO.cadastrarContato(contato);
                 break;
             case 2:
                 agenda.listarPessoas();
