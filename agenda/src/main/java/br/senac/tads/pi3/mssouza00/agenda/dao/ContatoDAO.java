@@ -30,7 +30,7 @@ public class ContatoDAO {
             ps.setString(3, contato.getVL_TELEFONE()); // Telefone
             ps.setString(4, contato.getVL_EMAIL()); // E-mail
             ps.execute();
-            ps.close();
+            System.out.println("Cadastrado com sucesso!!");
         } catch (SQLException er) {
             System.out.println(er.getMessage() + " Erro ao cadastrar");
         }
@@ -43,7 +43,7 @@ public class ContatoDAO {
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.execute();
-            ps.close();
+            System.out.println("Dados removidos com sucesso");
         } catch (SQLException er) {
             System.out.println(er.getMessage() + " Erro ao remover");
         }
@@ -82,7 +82,7 @@ public class ContatoDAO {
             ps.setString(4, contato.getVL_EMAIL());
             ps.setLong(5, Id);
             ps.execute();
-            ps.close();
+            System.out.println("dados alterados com sucesso.");
         } catch (SQLException er) {
             System.out.println(er.getMessage() + " Erro ao alterar");
         }
