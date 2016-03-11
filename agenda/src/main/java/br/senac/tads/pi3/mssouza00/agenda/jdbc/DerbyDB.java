@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class DerbyDB {
     
     public static Connection getConnection() {
-        String conn = "jdbc:derby://localhost:1527/agendabd";
+        String conn = "jdbc:derby://localhost:1527/sample";
         String user = "app";
         String passwd = "app";
         Connection conexao = null;
