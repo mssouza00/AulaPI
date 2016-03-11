@@ -15,7 +15,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Contato contato = new Contato();
-        Agenda agenda = new Agenda();
         Scanner input = new Scanner(System.in);
         System.out.printf("1 - Cadastrar contato"
                 + "\n2 - Listar contatos"
@@ -46,17 +45,13 @@ public class Main {
                 System.out.println("Digite o ID do contato a alterar");
                 contato.setID_CONTATO(input.nextLong());
                 System.out.println("Nome:");
-                contato.setNM_CONTATO(input.next());
-                 contato.setNM_CONTATO(input.nextLine());
+                contato.setNM_CONTATO(util.leitor());
                 System.out.println("Data de Nascimento:");
-                contato.setDT_NASCIMENTO(input.nextLine());
-                contato.setDT_NASCIMENTO(input.nextLine());
+                contato.setDT_NASCIMENTO(util.leitor());
                 System.out.println("Telefone:");
-                contato.setVL_TELEFONE(input.next());
-                contato.setVL_TELEFONE(input.nextLine());
+                contato.setVL_TELEFONE(util.leitor());
                 System.out.println("E-mail:");
-                contato.setVL_EMAIL(input.nextLine());
-                contato.setVL_EMAIL(input.nextLine());
+                contato.setVL_EMAIL(util.leitor());
                 ContatoDAO.alterarContato(contato);
                 break;
             case 4:
